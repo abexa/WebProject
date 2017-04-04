@@ -7,11 +7,11 @@ public class Main{
 
 	public static void main(String[] args) throws FileNotFoundException, IOException{
 
-		SendOrder so = new SendOrder();
-		so.sendOrder();
-		so.enterOrder();
+		InstantLink il = new InstantLink();
+		WorkflowClient wfc = new WorkflowClient();
 		
-		//hello
+		il.ilActions();
+		wfc.wfcActions();
 	}
 
 }

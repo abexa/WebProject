@@ -16,41 +16,42 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public abstract class Actions {
 	
-	private static Properties props;
+	private Properties props;
+	protected String enterUsername = "username";
+	protected String keyToSendUser = "Administrator";
+	protected String enterPassword = "password";
+	protected String keyToSendPass = "guiadmin";
 	
 	public Actions() throws FileNotFoundException, IOException{
 		props = new Properties();
 		props.load(new FileInputStream("files/config.properties"));
 	}
 	
-	public static WebDriver driver;
+	public WebDriver driver;
 
-	public static LinkedList<OrderResponse> raspuns = new LinkedList<>();
-	public static LinkedList<SearchOrder> dateRaspuns = new LinkedList<>();
-	public static LinkedList<WorkflowAction> workflow = new LinkedList<>();
+	public LinkedList<OrderResponse> raspuns = new LinkedList<>();
+	public LinkedList<SearchOrder> dateRaspuns = new LinkedList<>();
+	public LinkedList<WorkflowAction> workflow = new LinkedList<>();
 	//public static List <WebElement> framesList = driver.findElements(By.xpath("//iframe"));
 
-	public static void openWeb(){
-		String driverPath = props.getProperty("driverPath");
+	public void openWeb(String driverPath){
+		
 		System.setProperty("webdriver.chrome.driver", driverPath);
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 	}
 
-	public static void openWebPage(String link){
+	public void openWebPage(String link){
 		driver.get(link);
 	}
 
-	public static void login(){
-		String enterUsername = props.getProperty("enterUsername");
-		String keyToSendUser = props.getProperty("keyToSendUser");
-		String enterPassword = props.getProperty("enterPassword");
-		String keyToSendPass = props.getProperty("keyToSendPass");
+	public void login(){
+		
 		findElement(enterUsername).sendKeys(keyToSendUser);
 		findElement(enterPassword).sendKeys(keyToSendPass);
 	}
 
-	public static WebElement findElement(String findElement){
+	public WebElement findElement(String findElement){
 
 		WebElement el = null;
 		try{
@@ -91,7 +92,7 @@ public abstract class Actions {
 
 
 
-	public static void takeListFromOrderIL(){
+	public void takeListFromOrderIL(){
 		
 		String tableILOrder = props.getProperty("tableILOrder");
 		WebElement tabel1 = findElement(tableILOrder);
@@ -120,7 +121,7 @@ public abstract class Actions {
 		}
 	}
 
-	public static void getOrderFromWorkflow(String findElement){
+	public void getOrderFromWorkflow(String findElement){
 
 		WebElement tabel1 = findElement(findElement);
 
@@ -168,14 +169,14 @@ public abstract class Actions {
 }
 	}*/
 
-	public static void waitForAlert(){
+	public void waitForAlert(){
 
 		Alert alt = driver.switchTo().alert();
 		alt.accept();
 
 	}
 
-	public static void waitForStatus() throws InterruptedException{
+	public void waitForStatus() throws InterruptedException{
 		String status = props.getProperty("wfcFirstNotifyStatusOrder");
 		String findElement = props.getProperty("findElement");
 		getOrderFromWorkflow(findElement);
@@ -192,7 +193,7 @@ public abstract class Actions {
 		
 	}
 
-	private static void clearAndRetry() throws InterruptedException {
+	private void clearAndRetry() throws InterruptedException {
 				
 				String searchButton = props.getProperty("searchOrderButton");
 				//clear lists
