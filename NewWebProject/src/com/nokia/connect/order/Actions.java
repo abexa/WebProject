@@ -193,7 +193,7 @@ public abstract class Actions {
 		
 	}
 
-	private void clearAndRetry() throws InterruptedException {
+	public void clearAndRetry() throws InterruptedException {
 				
 				String searchButton = props.getProperty("searchOrderButton");
 				//clear lists
@@ -215,9 +215,13 @@ public abstract class Actions {
 		StringBuilder sb = new StringBuilder();
 		sb.append(enterOrder).append(orderId);
 	}
-	private void exitOrder() {
+	public void exitOrder() {
 		String goBackToOrderList = props.getProperty("goBackToOrderList");
 		findElement(goBackToOrderList).click();	
+	}
+	
+	public void clickButton(String el){
+		findElement(el).click();
 	}
 }
 

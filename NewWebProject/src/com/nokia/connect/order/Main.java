@@ -11,7 +11,7 @@ public class Main{
 		WorkflowClient wfc = new WorkflowClient();
 		
 		il.ilActions();
-		wfc.wfcActions();
+		//wfc.wfcActions();
 	}
 
 }
