@@ -7,8 +7,8 @@ public class Main{
 
 	public static void main(String[] args) throws FileNotFoundException, IOException{
 		
-		//SendOrder so = new SendOrder();
-		//so.sendOrder();
+		SendOrder so = new SendOrder();
+		so.sendOrder();
 		
 	}
 
