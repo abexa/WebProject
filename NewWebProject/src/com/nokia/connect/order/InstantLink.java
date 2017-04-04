@@ -6,7 +6,7 @@ import java.io.IOException;
 public class InstantLink  extends Actions {
 	
 	private String ilLink = "http://ec2-52-63-80-249.ap-southeast-2.compute.amazonaws.com:44080/sas5";
-	private String driverPath = "C:\\Users\\abexa\\Documents\\Chorus\\chromedriver.exe";
+	private String driverPath = "C:\\Users\\opis\\Documents\\CHORUS\\Selenium\\chromedriver.exe";
 	private String logInButton = "btnauthenticate";
 	private String searchOrderButton = "";
 	
