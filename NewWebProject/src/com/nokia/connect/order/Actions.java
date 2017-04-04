@@ -45,8 +45,8 @@ public abstract class Actions {
 
 	public void login(String enterUsername, String enterPassword){
 
-		findElement(enterUsername).sendKeys(keyToSendUser);
-		findElement(enterPassword).sendKeys(keyToSendPass);
+		sendKey(enterUsername, keyToSendUser);
+		sendKey(enterPassword, keyToSendPass);
 	}
 
 	public WebElement findElement(String findElement){
@@ -229,12 +229,17 @@ public abstract class Actions {
 		findElement(el).click();
 	}
 	
+	public void sendKey(String el, String keyToSend){
+		findElement(el).sendKeys(keyToSend);
+	}
+	
 	public void getIframe(final WebDriver driver, final String id) {
     	final List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
     	for (WebElement iframe : iframes) {
         if (iframe.getAttribute("id").equals(id)) {
         // TODO your stuff.
         }
+      
     }
 }
 }
