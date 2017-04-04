@@ -9,7 +9,7 @@ public class Main{
 		
 		SendOrder so = new SendOrder();
 		so.sendOrder();
-		
+		//so.enterOrder();
 	}
 
 }
