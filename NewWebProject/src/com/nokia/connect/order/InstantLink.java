@@ -8,6 +8,7 @@ import java.util.Properties;
 public class InstantLink  extends Actions {
 	
 	private String ilLink = "http://ec2-52-63-80-249.ap-southeast-2.compute.amazonaws.com:44080/sas5";
+	private String omIlLink = "http://cfiwn02-app2.nz.alcatel-lucent.com:44080/sas5/navigation_servlet/showOM";
 	private String enterUsername = "username";
 	private String enterPassword = "password";
 	private String logInButton = "btnauthenticate";
@@ -30,6 +31,7 @@ public class InstantLink  extends Actions {
 		openWebPage(ilLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
+		openWebPage(omIlLink);
 	}
 
 
