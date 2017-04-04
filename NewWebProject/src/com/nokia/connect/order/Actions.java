@@ -45,7 +45,7 @@ public abstract class Actions {
 		driver.get(link);
 	}
 
-	public void login(){
+	public void login(String enterUsername2, String enterPassword2){
 
 		findElement(enterUsername).sendKeys(keyToSendUser);
 		findElement(enterPassword).sendKeys(keyToSendPass);
