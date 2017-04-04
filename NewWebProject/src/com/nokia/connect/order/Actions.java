@@ -17,9 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public abstract class Actions {
 
 	private Properties props;
-	protected String enterUsername = "username";
 	protected String keyToSendUser = "Administrator";
-	protected String enterPassword = "password";
 	protected String keyToSendPass = "guiadmin";
 
 	public Actions() throws FileNotFoundException, IOException{
@@ -45,7 +43,11 @@ public abstract class Actions {
 		driver.get(link);
 	}
 
+<<<<<<< HEAD
 	public void login(String enterUsername2, String enterPassword2){
+=======
+	public void login(String enterUsername, String enterPassword){
+>>>>>>> branch 'master' of https://github.com/abexa/WebProject.git
 
 		findElement(enterUsername).sendKeys(keyToSendUser);
 		findElement(enterPassword).sendKeys(keyToSendPass);

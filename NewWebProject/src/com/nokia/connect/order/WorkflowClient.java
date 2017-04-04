@@ -21,7 +21,10 @@ public class WorkflowClient extends Actions{
 		openWebPage(wfcLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
+<<<<<<< HEAD
 		
 	
+=======
+>>>>>>> branch 'master' of https://github.com/abexa/WebProject.git
 	}
 }
