@@ -8,6 +8,8 @@ import java.util.Properties;
 public class InstantLink  extends Actions {
 	
 	private String ilLink = "http://ec2-52-63-80-249.ap-southeast-2.compute.amazonaws.com:44080/sas5";
+	private String enterUsername = "username";
+	private String enterPassword = "password";
 	private String logInButton = "btnauthenticate";
 	private String searchOrderButton = "";
 	private Properties props;	
@@ -26,7 +28,7 @@ public class InstantLink  extends Actions {
 		
 		openWeb(driverPath);
 		openWebPage(ilLink);
-		login();
+		login(enterUsername, enterPassword);
 		clickButton(logInButton);
 	}
 
