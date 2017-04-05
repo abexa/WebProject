@@ -45,19 +45,9 @@ public abstract class Actions {
 
 	public void login(String enterUsername, String enterPassword) {
 
-		findElement(enterUsername).sendKeys(keyToSendUser);
-		findElement(enterPassword).sendKeys(keyToSendPass);
+		sendKey(enterUsername, keyToSendUser);
+		sendKey(enterPassword, keyToSendPass);
 	}
-
-	/*
-	 * public void getIframe(final WebDriver driver, final String id) {
-	 * 
-	 * boolean result = true; final List<WebElement> iframes =
-	 * (List<WebElement>) findElement("iframe");
-	 * 
-	 * for (WebElement iframe : iframes) { if (findElement()!=null) { break; }
-	 * else { continue; } } }
-	 */
 
 	public WebElement findElement(String findElement) {
 
@@ -112,7 +102,6 @@ public abstract class Actions {
 				} catch (Exception e) {
 
 				}
-				break;
 			}
 		} else {
 			try {
@@ -159,38 +148,9 @@ public abstract class Actions {
 		return null;
 	}
 
-	public void takeListFromOrderIL() {
+	public void takeListFromOrderIL(String table1IlXpath) {
 
-		String tableILOrder = props.getProperty("tableILOrder");
-		WebElement tabel1 = findElement(tableILOrder);
-
-		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
-
-		int dimensiuneRand = rand.size();
-		System.out.println("randuri: " + dimensiuneRand);
-
-		for (int i = 0; i < dimensiuneRand; i++) {
-
-			WorkflowAction wfc = new WorkflowAction();
-			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
-
-			int dimensiuneColoana = coloana.size();
-			if (dimensiuneColoana == 0) {
-				continue;
-			}
-
-			for (int j = 0; j < dimensiuneColoana; j++) {
-				String celltext = coloana.get(j).getText();
-				wfc.add(i, j, celltext);
-				System.out.println("Cell Value Of row number " + i + " and column number " + j + " Is " + celltext);
-			}
-			workflow.add(wfc);
-		}
-	}
-
-	public void getOrderFromWorkflow(String findElement) {
-
-		WebElement tabel1 = findElement(findElement);
+		WebElement tabel1 = findElement(table1IlXpath);
 
 		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
 
@@ -216,19 +176,33 @@ public abstract class Actions {
 		}
 	}
 
-	/*
-	 * public static void searchElementInAllFrames(){
-	 * 
-	 * WebElement frameEl = driver.findElement(By.tagName("iframe"));
-	 * driver.switchTo().frame(frameEl); //for(WebElement frame:framesList){
-	 * //DO something with frame //frame.getText(); //}
-	 * 
-	 * 
-	 * public void getIframe(final WebDriver driver, final String id) { final
-	 * List<WebElement> iframes = driver.findElements(By.tagName("iframe")); for
-	 * (WebElement iframe : iframes) { if (iframe.getAttribute("id").equals(id))
-	 * { // TODO your stuff. } } } }
-	 */
+	public void getOrderIdFromWorkflow(String tableWfcXpath) {
+
+		WebElement tabel1 = findElement(tableWfcXpath);
+
+		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
+
+		int dimensiuneRand = rand.size();
+		System.out.println("randuri: " + dimensiuneRand);
+
+		for (int i = 0; i < dimensiuneRand; i++) {
+
+			WorkflowAction wfc = new WorkflowAction();
+			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
+
+			int dimensiuneColoana = coloana.size();
+			if (dimensiuneColoana == 0) {
+				continue;
+			}
+
+			for (int j = 0; j < dimensiuneColoana; j++) {
+				String celltext = coloana.get(j).getText();
+				wfc.add(i, j, celltext);
+				System.out.println("Cell Value Of row number " + i + " and column number " + j + " Is " + celltext);
+			}
+			workflow.add(wfc);
+		}
+	}
 
 	public void waitForAlert() {
 
@@ -237,26 +211,42 @@ public abstract class Actions {
 
 	}
 
-	public void waitForStatus() throws InterruptedException {
-		String status = props.getProperty("wfcFirstNotifyStatusOrder");
-		String findElement = props.getProperty("findElement");
-		getOrderFromWorkflow(findElement);
-		for (WorkflowAction wla : workflow) {
-			try {
-				if (wla.getStatus().equals(status)) {
-					break;
-				}
-			} catch (Exception e) {
-				Thread.sleep(5000);
-			}
-			clearAndRetry();
-		}
+	public void waitForStatus(String status, String tableWfcXpath, String searchButton) throws InterruptedException {
 
+		while(true){
+			getOrderIdFromWorkflow(tableWfcXpath);
+			for (WorkflowAction wla : workflow) {
+				try {
+					if (wla.getStatus().equals(status)) {
+						break;
+					}
+				} catch (Exception e) {
+					Thread.sleep(5000);
+				}
+			}
+			clearAndRetry(searchButton);
+		}
+	}
+	
+	public void waitForActivities(String activity, String table2IlXpath, String searchButton) throws InterruptedException{
+		
+		while(true){
+			getStatusOrderInstantLink(table2IlXpath);
+			for (SearchOrder so : dateRaspuns){
+				try {
+					if (so.getActivities().equals(activity)) {
+						break;
+					}
+				} catch (Exception e) {
+					Thread.sleep(5000);
+				}
+			}
+			clearAndRetry(searchButton);
+		}
 	}
 
-	public void clearAndRetry() throws InterruptedException {
+	public void clearAndRetry(String searchButton) throws InterruptedException {
 
-		String searchButton = props.getProperty("searchOrderButton");
 		// clear lists
 		workflow.clear();
 		dateRaspuns.clear();
@@ -269,20 +259,79 @@ public abstract class Actions {
 		findElement(searchButton).click();
 	}
 
-	public void enterOrder() {
-
-		String enterOrder = props.getProperty("enterOrder");
-		String orderId = props.getProperty("OE_PRODUCT_ID");
+	/*public void enterOrder() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(enterOrder).append(orderId);
-	}
+		for (SearchOrder so : dateRaspuns){
+			try {
+				if (so.getInternalId().equals()) {
+					orderId = so.getInternalId();
+				}
+			} catch (Exception e) {
+				Thread.sleep(5000);
+			}
+			
+			
+			sb.append(enterOrder).append(orderId);
+		}
+	}*/
 
-	public void exitOrder() {
-		String goBackToOrderList = props.getProperty("goBackToOrderList");
-		findElement(goBackToOrderList).click();
+	public void exitOrder(String goBackToWorkItemsButton) {
+
+		findElement(goBackToWorkItemsButton).click();
 	}
 
 	public void clickButton(String el) {
 		findElement(el).click();
+	}
+	
+	public void sendKey(String el, String keyToSend){
+		findElement(el).sendKeys(keyToSend);
+	}
+	
+	/*public void doManualActivationNGBCircuitFallout(){
+
+		int primul = workflow.getFirst().getRow();
+		StringBuilder sb = new StringBuilder();
+		sb.append("//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable:").append(primul-1).append(":_idJsp60\"]");
+		driver.findElement(By.xpath(sb.toString())).click();
+		driver.findElement(By.id("tab2href")).click();
+		driver.findElement(By.id("ACTION_MANUAL")).click();
+		driver.findElement(By.xpath("//*[@id=\"submitInnerFormButton\"]")).click();
+
+	}*/
+	
+/*	public void sendContinueManualActivation(){
+
+		int first = workflow.getFirst().getRow();
+		StringBuilder sb = new StringBuilder();
+		sb.append("//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable:").append(first-1).append(":_idJsp60\"]");
+		driver.findElement(By.xpath(sb.toString())).click();
+		driver.findElement(By.id("tab2href")).click();
+		driver.findElement(By.xpath("//*[@id=\"submitInnerFormButton\"]")).click();
+	}*/
+	
+	public void getStatusOrderInstantLink(String table2IlXpath){
+
+		WebElement tabel1 = findElement(table2IlXpath);
+		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
+		int dimensiuneRand = rand.size();
+		//System.out.println("randuri: "+dimensiuneRand);
+
+		for(int i=0;i<dimensiuneRand;i++){
+			SearchOrder searchOrder = new SearchOrder();
+			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
+			int dimensiuneColoana = coloana.size();
+			if(dimensiuneColoana == 0 || coloana.get(0).getText().isEmpty()){
+				continue;
+			}
+			for(int j=0;j<dimensiuneColoana;j++){
+				String celltext = coloana.get(j).getText();
+				searchOrder.add(j, celltext);
+				//System.out.println("Cell Value Of row number "+i+" and column number "+j+" Is "+celltext);
+			}
+			if(dimensiuneColoana != 0){
+				dateRaspuns.add(searchOrder);
+			}
+		}
 	}
 }

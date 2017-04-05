@@ -14,7 +14,10 @@ public class InstantLink  extends Actions {
 	private String logInButton = "btnauthenticate";
 	private String clearButton = "btnclearSearchForm";
 	private String orderNoXpath = "txtorderNo";
+	private String orderNo = "Andra30";
 	private String searchOrderButton = "//*[@id=\"OrdersForm\"]/div/table/tbody/tr[2]/td/table/tbody/tr/td/button[1]";
+	private String table1IlXpath = "//*[@id=\"content\"]/form/table[2]";
+	private String table2IlXpath = "//*[@id=\"OrdersForm\"]/table";
 	private Properties props;	
 	
 	public InstantLink() throws FileNotFoundException, IOException {
@@ -23,7 +26,7 @@ public class InstantLink  extends Actions {
 		props.load(new FileInputStream("files/config.properties"));
 		// TODO Auto-generated constructor stub
 	}
-	
+
 
 	public void ilActions(){ 
 		
@@ -34,6 +37,9 @@ public class InstantLink  extends Actions {
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
 		openWebPage(omIlLink);
+		findElement(clearButton);
+		
+		
 	}
 
 

@@ -13,6 +13,10 @@ public class WorkflowClient extends Actions{
 	private String clearButton = "//*[@id=\"mainForm:workspace_working_area_view:_idJsp59\"]";
 	private String productIdXpath = "//*[@id=\"mainForm:workspace_working_area_view:additionalSearchFields_14\"]";
 	private String searchButton = "//*[@id=\"mainForm:workspace_working_area_view:_idJsp58\"]";
+	private String wfcFirstNotifyStatusOrder = "Notify Activate NGB Circuit Fallout";
+	private String wfcSecondNotifyStatusOrder = "Wait For Manual Activation";	
+	private String tableWfcXpath = "//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable\"]";
+	
 	
 	public WorkflowClient() throws FileNotFoundException, IOException {
 		super();
@@ -25,5 +29,6 @@ public class WorkflowClient extends Actions{
 		openWebPage(wfcLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
+		
 	}
 }
