@@ -51,57 +51,105 @@ public abstract class Actions {
 
 	public WebElement findElement(String findElement) {
 
-		final List<WebElement> iframes = driver.findElements(By.tagName("frame"));
-		try{
-			WebElement frame = driver.findElement(By.tagName("iframe"));
-		} catch (Exception e)
-		{
-
-		}
+		final List<WebElement> iframes = driver.findElements(By.tagName("frameset"));
+		final List<WebElement> wfcFrames = driver.findElements(By.tagName("iframe"));
 		WebElement el = null;
 
 		if (iframes.size() != 0) {
 			for (WebElement iframe : iframes) {
-				try {
-					el = driver.findElement(By.id(findElement));
-					if (el != null) {
-						return el;
-					}
-				} catch (Exception e) {
+				List<WebElement> frame = driver.findElements(By.tagName("frame"));
+				for (WebElement frames : frame) {
+					driver.switchTo().frame(frames);
+					try {
+						el = driver.findElement(By.id(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
 
-				}
-				try {
-					el = driver.findElement(By.name(findElement));
-					if (el != null) {
-						return el;
 					}
-				} catch (Exception e) {
+					try {
+						el = driver.findElement(By.name(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
 
-				}
-				try {
-					el = driver.findElement(By.xpath(findElement));
-					if (el != null) {
-						return el;
 					}
-				} catch (Exception e) {
+					try {
+						el = driver.findElement(By.xpath(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
 
-				}
-				try {
-					el = driver.findElement(By.tagName(findElement));
-					if (el != null) {
-						return el;
 					}
-				} catch (Exception e) {
+					try {
+						el = driver.findElement(By.tagName(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
 
-				}
-				try {
-					el = driver.findElement(By.cssSelector(findElement));
-					if (el != null) {
-						return el;
 					}
-				} catch (Exception e) {
+					try {
+						el = driver.findElement(By.cssSelector(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
 
+					}
+					driver.switchTo().defaultContent();
 				}
+			}
+		} else if(wfcFrames.size()!=0){
+			for (WebElement iframe : wfcFrames) {
+				//List<WebElement> frame = driver.findElements(By.tagName("frame"));
+				//for (WebElement frames : frame) {
+					driver.switchTo().frame(iframe);
+					try {
+						el = driver.findElement(By.id(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
+
+					}
+					try {
+						el = driver.findElement(By.name(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
+
+					}
+					try {
+						el = driver.findElement(By.xpath(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
+
+					}
+					try {
+						el = driver.findElement(By.tagName(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
+
+					}
+					try {
+						el = driver.findElement(By.cssSelector(findElement));
+						if (el != null) {
+							return el;
+						}
+					} catch (Exception e) {
+
+					}
+					driver.switchTo().defaultContent();
+				//}
 			}
 		} else {
 			try {
