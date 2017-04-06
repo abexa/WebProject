@@ -264,8 +264,8 @@ public abstract class Actions {
 			getOrderIdFromWorkflow(tableWfcXpath);
 			for (WorkflowObject wla : workflow) {
 				try {
-					if (wla.getStatus().equals(status)) {
-						break;
+					if (wla.getStatus().contains(status)) {
+						return;
 					}
 				} catch (Exception e) {
 					Thread.sleep(5000);
@@ -282,7 +282,7 @@ public abstract class Actions {
 			for (SearchOrder so : dateRaspuns){
 				try {
 					if (so.getActivities().equals(activity)) {
-						break;
+						return;
 					}
 				} catch (Exception e) {
 					Thread.sleep(5000);

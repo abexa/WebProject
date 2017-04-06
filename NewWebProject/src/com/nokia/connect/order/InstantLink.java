@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class InstantLink  extends Actions {
 	
-	private String ilLink = "http://ec2-52-63-80-249.ap-southeast-2.compute.amazonaws.com:44080/sas5";
+	private String ilLink = "http://cfiwn02-app2.nz.alcatel-lucent.com:44080/sas5/";
 	private String omIlLink = "http://cfiwn02-app2.nz.alcatel-lucent.com:44080/sas5/navigation_servlet/showOM";
 	private String enterUsername = "username";
 	private String enterPassword = "password";
@@ -19,6 +19,8 @@ public class InstantLink  extends Actions {
 	private String table1IlXpath = "//*[@id=\"content\"]/form/table[2]";
 	private String table2IlXpath = "//*[@id=\"OrdersForm\"]/table";
 	private String activity = "3/3";
+	private String orderStatus = "Wait for ICMS Service Order Closure";
+	String xmlFile2Send = "C:\\Users\\abexa\\Documents\\Chorus\\NotifyOrderComplete.xml";
 	private Properties props;	
 	
 	public InstantLink() throws FileNotFoundException, IOException {
@@ -29,7 +31,7 @@ public class InstantLink  extends Actions {
 	}
 
 
-	public void ilActions() throws InterruptedException{ 
+	public void ilFirstAction() throws InterruptedException{ 
 		
 		String driverPath = props.getProperty("driverPath");
 		
@@ -43,6 +45,18 @@ public class InstantLink  extends Actions {
 		clickButton(searchOrderButton);
 		waitForActivities(activity, table2IlXpath, searchOrderButton);
 		
+	}
+	
+	public void ilSecondAction() throws InterruptedException, IOException{
+		
+		openWebPage(ilLink);
+		openWebPage(omIlLink);
+		clickButton(clearButton);
+		sendKey(orderNoXpath, orderNo);
+		clickButton(searchOrderButton);
+		enterIlOrder();
+		waitForStatus(orderStatus, table1IlXpath, searchOrderButton);
+		Xml.sendXml(xmlFile2Send, true);
 	}
 
 
