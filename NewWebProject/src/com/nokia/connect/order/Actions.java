@@ -11,7 +11,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 
 public abstract class Actions {
 
@@ -25,20 +25,23 @@ public abstract class Actions {
 	}
 
 	public WebDriver driver;
-
+	
+	
 	public LinkedList<OrderResponse> raspuns = new LinkedList<>();
 	public LinkedList<SearchOrder> dateRaspuns = new LinkedList<>();
 	public LinkedList<WorkflowObject> workflow = new LinkedList<>();
 	private int primul;
 		
-	public void openWeb(String driverPath) {
-
-		System.setProperty("webdriver.chrome.driver", driverPath);
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
+	private void openWeb() throws FileNotFoundException, IOException {
+		
+		driver = WebDriverChrome.getWebDriver();
+		
 	}
 
-	public void openWebPage(String link) {
+	public void openWebPage(String link) throws FileNotFoundException, IOException {
+		if (driver == null){
+			openWeb();
+		}
 		driver.get(link);
 	}
 
@@ -314,7 +317,7 @@ public abstract class Actions {
 		clickButton(sb.toString());
 	}
 	
-	public void enterIlOrder() {
+	public void enterIlOrder() throws FileNotFoundException, IOException {
 		
 		String orderId = dateRaspuns.getLast().getInternalId();
 		StringBuilder sb = new StringBuilder();

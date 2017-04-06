@@ -30,7 +30,7 @@ public class InstantLink  extends Actions {
 	}
 
 
-	public void ilFirstAction() throws InterruptedException{ 
+	public void ilFirstAction() throws InterruptedException, FileNotFoundException, IOException{ 
 
 		String orderNo = props.getProperty("orderNo");
 

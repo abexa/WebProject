@@ -29,14 +29,13 @@ public class WorkflowClient extends Actions{
 	}
 
 	
-	public void wfcActions() throws InterruptedException{ 
+	public void wfcActions() throws InterruptedException, FileNotFoundException, IOException{ 
 		
 
 		String productId = props.getProperty("productId");
 
 
 		//String driverPath = props.getProperty("driverPath");
-		String productId = props.getProperty("productId");
 		
 		//openWeb(driverPath);
 
