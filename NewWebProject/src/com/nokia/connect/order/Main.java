@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class Main{
 
-	public static void main(String[] args) throws FileNotFoundException, IOException{
+	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException{
 
 		InstantLink il = new InstantLink();
 		WorkflowClient wfc = new WorkflowClient();

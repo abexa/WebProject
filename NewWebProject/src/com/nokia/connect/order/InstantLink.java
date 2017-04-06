@@ -14,10 +14,11 @@ public class InstantLink  extends Actions {
 	private String logInButton = "btnauthenticate";
 	private String clearButton = "btnclearSearchForm";
 	private String orderNoXpath = "txtorderNo";
-	private String orderNo = "Andra30";
+	private String orderNo = "Andra29";
 	private String searchOrderButton = "//*[@id=\"OrdersForm\"]/div/table/tbody/tr[2]/td/table/tbody/tr/td/button[1]";
 	private String table1IlXpath = "//*[@id=\"content\"]/form/table[2]";
 	private String table2IlXpath = "//*[@id=\"OrdersForm\"]/table";
+	private String activity = "3/3";
 	private Properties props;	
 	
 	public InstantLink() throws FileNotFoundException, IOException {
@@ -28,7 +29,7 @@ public class InstantLink  extends Actions {
 	}
 
 
-	public void ilActions(){ 
+	public void ilActions() throws InterruptedException{ 
 		
 		String driverPath = props.getProperty("driverPath");
 		
@@ -37,8 +38,10 @@ public class InstantLink  extends Actions {
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
 		openWebPage(omIlLink);
-		findElement(clearButton);
-		
+		clickButton(clearButton);
+		sendKey(orderNoXpath, orderNo);
+		clickButton(searchOrderButton);
+		waitForActivities(activity, table2IlXpath, searchOrderButton);
 		
 	}
 

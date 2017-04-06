@@ -1,14 +1,14 @@
 package com.nokia.connect.order;
 
 
-public class WorkflowAction {
+public class WorkflowObject {
 
 	private String orderId;
 	private int row;
 	private String status;
 	private int column;
 	
-	public WorkflowAction(){}
+	public WorkflowObject(){}
 	
 	public void add(int row, int column, String status){
 		switch(column){

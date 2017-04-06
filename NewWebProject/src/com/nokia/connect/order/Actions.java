@@ -28,10 +28,9 @@ public abstract class Actions {
 
 	public LinkedList<OrderResponse> raspuns = new LinkedList<>();
 	public LinkedList<SearchOrder> dateRaspuns = new LinkedList<>();
-	public LinkedList<WorkflowAction> workflow = new LinkedList<>();
-	// public static List <WebElement> framesList =
-	// driver.findElements(By.xpath("//iframe"));
-
+	public LinkedList<WorkflowObject> workflow = new LinkedList<>();
+	private int primul;
+		
 	public void openWeb(String driverPath) {
 
 		System.setProperty("webdriver.chrome.driver", driverPath);
@@ -207,7 +206,7 @@ public abstract class Actions {
 
 		for (int i = 0; i < dimensiuneRand; i++) {
 
-			WorkflowAction wfc = new WorkflowAction();
+			WorkflowObject wfc = new WorkflowObject();
 			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
 
 			int dimensiuneColoana = coloana.size();
@@ -235,7 +234,7 @@ public abstract class Actions {
 
 		for (int i = 0; i < dimensiuneRand; i++) {
 
-			WorkflowAction wfc = new WorkflowAction();
+			WorkflowObject wfc = new WorkflowObject();
 			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
 
 			int dimensiuneColoana = coloana.size();
@@ -263,7 +262,7 @@ public abstract class Actions {
 
 		while(true){
 			getOrderIdFromWorkflow(tableWfcXpath);
-			for (WorkflowAction wla : workflow) {
+			for (WorkflowObject wla : workflow) {
 				try {
 					if (wla.getStatus().equals(status)) {
 						break;
@@ -307,22 +306,22 @@ public abstract class Actions {
 		findElement(searchButton).click();
 	}
 
-	/*public void enterOrder() {
+	public void enterWfcOrder() {
+		
+		primul = workflow.getFirst().getRow();
 		StringBuilder sb = new StringBuilder();
-		for (SearchOrder so : dateRaspuns){
-			try {
-				if (so.getInternalId().equals()) {
-					orderId = so.getInternalId();
-				}
-			} catch (Exception e) {
-				Thread.sleep(5000);
-			}
-			
-			
-			sb.append(enterOrder).append(orderId);
-		}
-	}*/
-
+		sb.append("//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable:").append(primul-1).append(":_idJsp60\"]");
+		clickButton(sb.toString());
+	}
+	
+	public void enterIlOrder() {
+		
+		String orderId = dateRaspuns.getLast().getInternalId();
+		StringBuilder sb = new StringBuilder();
+		sb.append("http://cfiwn02-app2.nz.alcatel-lucent.com:44080/sas5/order_management_servlet/showOrderDetails?baseline=false&showDetails=DEFAULT&requestId=").append(orderId);
+		openWebPage(sb.toString());
+	}
+	
 	public void exitOrder(String goBackToWorkItemsButton) {
 
 		findElement(goBackToWorkItemsButton).click();
@@ -336,27 +335,19 @@ public abstract class Actions {
 		findElement(el).sendKeys(keyToSend);
 	}
 	
-	/*public void doManualActivationNGBCircuitFallout(){
+	public void doManualActivationNGBCircuitFallout(){
 
-		int primul = workflow.getFirst().getRow();
-		StringBuilder sb = new StringBuilder();
-		sb.append("//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable:").append(primul-1).append(":_idJsp60\"]");
-		driver.findElement(By.xpath(sb.toString())).click();
-		driver.findElement(By.id("tab2href")).click();
-		driver.findElement(By.id("ACTION_MANUAL")).click();
-		driver.findElement(By.xpath("//*[@id=\"submitInnerFormButton\"]")).click();
+		clickButton("tab2href");
+		clickButton("ACTION_MANUAL");
+		clickButton("//*[@id=\"submitInnerFormButton\"]");
 
-	}*/
+	}
 	
-/*	public void sendContinueManualActivation(){
+	public void sendContinueManualActivation(){
 
-		int first = workflow.getFirst().getRow();
-		StringBuilder sb = new StringBuilder();
-		sb.append("//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable:").append(first-1).append(":_idJsp60\"]");
-		driver.findElement(By.xpath(sb.toString())).click();
-		driver.findElement(By.id("tab2href")).click();
-		driver.findElement(By.xpath("//*[@id=\"submitInnerFormButton\"]")).click();
-	}*/
+		clickButton("tab2href");
+		clickButton("//*[@id=\"submitInnerFormButton\"]");
+	}
 	
 	public void getStatusOrderInstantLink(String table2IlXpath){
 
