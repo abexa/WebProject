@@ -19,7 +19,6 @@ public class WorkflowClient extends Actions{
 	private String wfcSecondNotifyStatusOrder = "Wait For Manual Activation";	
 	private String tableWfcXpath = "//*[@id=\"mainForm:workspace_working_area_view:actionTicketListingTable\"]";
 	private String goBackToWorkItemsButton = "//*[@id=\"content-div\"]/div[1]/table/tbody/tr/td/a[2]";
-	private String pomorderId = "112225";
 	private Properties props;
 	
 	public WorkflowClient() throws FileNotFoundException, IOException {
@@ -31,14 +30,17 @@ public class WorkflowClient extends Actions{
 
 	
 	public void wfcActions() throws InterruptedException{ 
+		
 		String driverPath = props.getProperty("driverPath");
+		String productId = props.getProperty("productId");
+		
 		openWeb(driverPath);
 		openWebPage(wfcLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
 		clickButton(workQueueXpath);
 		clickButton(clearButton);
-		sendKey(productIdXpath, pomorderId);
+		sendKey(productIdXpath, productId);
 		clickButton(searchButton);
 		waitForStatus(wfcFirstNotifyStatusOrder, tableWfcXpath, searchButton);
 		enterWfcOrder();

@@ -14,7 +14,6 @@ public class InstantLink  extends Actions {
 	private String logInButton = "btnauthenticate";
 	private String clearButton = "btnclearSearchForm";
 	private String orderNoXpath = "txtorderNo";
-	private String orderNo = "Andra29";
 	private String searchOrderButton = "//*[@id=\"OrdersForm\"]/div/table/tbody/tr[2]/td/table/tbody/tr/td/button[1]";
 	private String table1IlXpath = "//*[@id=\"content\"]/form/table[2]";
 	private String table2IlXpath = "//*[@id=\"OrdersForm\"]/table";
@@ -34,6 +33,7 @@ public class InstantLink  extends Actions {
 	public void ilFirstAction() throws InterruptedException{ 
 		
 		String driverPath = props.getProperty("driverPath");
+		String orderNo = props.getProperty("orderNo");
 		
 		openWeb(driverPath);
 		openWebPage(ilLink);
@@ -48,6 +48,8 @@ public class InstantLink  extends Actions {
 	}
 	
 	public void ilSecondAction() throws InterruptedException, IOException{
+		
+		String orderNo = props.getProperty("orderNo");
 		
 		openWebPage(ilLink);
 		openWebPage(omIlLink);
