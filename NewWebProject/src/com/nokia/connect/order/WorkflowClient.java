@@ -31,10 +31,10 @@ public class WorkflowClient extends Actions{
 	
 	public void wfcActions() throws InterruptedException{ 
 		
-		String driverPath = props.getProperty("driverPath");
+		//String driverPath = props.getProperty("driverPath");
 		String productId = props.getProperty("productId");
 		
-		openWeb(driverPath);
+		//openWeb(driverPath);
 		openWebPage(wfcLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
