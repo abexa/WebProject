@@ -31,11 +31,9 @@ public class InstantLink  extends Actions {
 
 
 	public void ilFirstAction() throws InterruptedException{ 
-		
-		String driverPath = props.getProperty("driverPath");
+
 		String orderNo = props.getProperty("orderNo");
-		
-		openWeb(driverPath);
+
 		openWebPage(ilLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);
