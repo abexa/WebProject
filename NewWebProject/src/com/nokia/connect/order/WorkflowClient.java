@@ -34,6 +34,12 @@ public class WorkflowClient extends Actions{
 
 		String productId = props.getProperty("productId");
 
+
+		//String driverPath = props.getProperty("driverPath");
+		String productId = props.getProperty("productId");
+		
+		//openWeb(driverPath);
+
 		openWebPage(wfcLink);
 		login(enterUsername, enterPassword);
 		clickButton(logInButton);

@@ -329,10 +329,12 @@ public abstract class Actions {
 
 	public void clickButton(String el) {
 		findElement(el).click();
+		driver.switchTo().defaultContent();
 	}
 	
 	public void sendKey(String el, String keyToSend){
 		findElement(el).sendKeys(keyToSend);
+		driver.switchTo().defaultContent();
 	}
 	
 	public void doManualActivationNGBCircuitFallout(){
