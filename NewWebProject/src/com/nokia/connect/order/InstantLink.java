@@ -18,6 +18,7 @@ public class InstantLink  extends Actions {
 	private String table1IlXpath = "//*[@id=\"content\"]/form/table[2]";
 	private String table2IlXpath = "//*[@id=\"OrdersForm\"]/table";
 	private String activity = "3/3";
+	private String refreshButton = "//*[@id=\"content\"]/form/div[2]/div/button[3]";
 	private String orderStatus = "Wait for ICMS Service Order Closure";
 	String xmlFile2Send = "C:\\Users\\abexa\\Documents\\Chorus\\NotifyOrderComplete.xml";
 	private Properties props;	
@@ -55,7 +56,7 @@ public class InstantLink  extends Actions {
 		sendKey(orderNoXpath, orderNo);
 		clickButton(searchOrderButton);
 		enterIlOrder();
-		waitForStatus(orderStatus, table1IlXpath, searchOrderButton);
+		waitForStatusIl(orderStatus, table1IlXpath, refreshButton);
 		Xml.sendXml(xmlFile2Send, true);
 	}
 

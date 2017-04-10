@@ -46,7 +46,7 @@ public class WorkflowClient extends Actions{
 		clickButton(clearButton);
 		sendKey(productIdXpath, productId);
 		clickButton(searchButton);
-		waitForStatus(wfcFirstNotifyStatusOrder, tableWfcXpath, searchButton);
+		waitForStatusWfc(wfcFirstNotifyStatusOrder, tableWfcXpath, searchButton);
 		enterWfcOrder();
 		doManualActivationNGBCircuitFallout();
 		waitForAlert();
@@ -54,7 +54,7 @@ public class WorkflowClient extends Actions{
 		clickButton(clearButton);
 		sendKey(productIdXpath, productId);
 		clickButton(searchButton);
-		waitForStatus(wfcSecondNotifyStatusOrder, tableWfcXpath, searchButton);
+		waitForStatusWfc(wfcSecondNotifyStatusOrder, tableWfcXpath, searchButton);
 		enterWfcOrder();
 		sendContinueManualActivation();
 		waitForAlert();

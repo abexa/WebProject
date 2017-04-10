@@ -233,7 +233,7 @@ public abstract class Actions {
 		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
 
 		int dimensiuneRand = rand.size();
-		System.out.println("randuri: " + dimensiuneRand);
+		//System.out.println("randuri: " + dimensiuneRand);
 
 		for (int i = 0; i < dimensiuneRand; i++) {
 
@@ -248,7 +248,7 @@ public abstract class Actions {
 			for (int j = 0; j < dimensiuneColoana; j++) {
 				String celltext = coloana.get(j).getText();
 				wfc.add(i, j, celltext);
-				System.out.println("Cell Value Of row number " + i + " and column number " + j + " Is " + celltext);
+				//System.out.println("Cell Value Of row number " + i + " and column number " + j + " Is " + celltext);
 			}
 			workflow.add(wfc);
 		}
@@ -261,7 +261,7 @@ public abstract class Actions {
 
 	}
 
-	public void waitForStatus(String status, String tableWfcXpath, String searchButton) throws InterruptedException {
+	public void waitForStatusWfc(String status, String tableWfcXpath, String searchButton) throws InterruptedException {
 
 		while(true){
 			getOrderIdFromWorkflow(tableWfcXpath);
@@ -275,6 +275,24 @@ public abstract class Actions {
 				}
 			}
 			clearAndRetry(searchButton);
+		}
+	}
+	
+	public void waitForStatusIl(String status, String table1IlXpath, String refreshButton) throws InterruptedException {
+
+		while(true){
+			takeListFromOrderIL(table1IlXpath);
+			for (OrderResponse rsp : raspuns) {
+				try {
+					if (rsp.getStatus().endsWith(status)) {
+						return;
+					}
+				} catch (Exception e) {
+					Thread.sleep(5000);
+				}
+			}
+			dateRaspuns.clear();
+			clickButton(refreshButton);
 		}
 	}
 	

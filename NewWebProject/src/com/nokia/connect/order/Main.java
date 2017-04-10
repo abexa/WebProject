@@ -14,7 +14,7 @@ public class Main{
 		
 		//Xml.sendXml(xmlFile2Send, true);
 		il.ilFirstAction();
-		wfc.wfcActions();
+		//wfc.wfcActions();
 		il.ilSecondAction();
 	}
 
