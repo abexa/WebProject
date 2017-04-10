@@ -198,31 +198,33 @@ public abstract class Actions {
 		return null;
 	}
 
-	public void takeListFromOrderIL(String table1IlXpath) {
+	public void takeListFromOrderIL(String table1IlXpath){
 
-		WebElement tabel1 = findElement(table1IlXpath);
-
-		List<WebElement> rand = tabel1.findElements(By.tagName("tr"));
-
-		int dimensiuneRand = rand.size();
-		System.out.println("randuri: " + dimensiuneRand);
-
-		for (int i = 0; i < dimensiuneRand; i++) {
-
-			WorkflowObject wfc = new WorkflowObject();
-			List<WebElement> coloana = rand.get(i).findElements(By.tagName("td"));
-
-			int dimensiuneColoana = coloana.size();
-			if (dimensiuneColoana == 0) {
+		WebElement myTable = driver.findElement(By.xpath("//*[@id=\"content\"]/form/table[2]"));
+		List<WebElement> rows_table = myTable.findElements(By.tagName("tr"));
+		int rows_count = rows_table.size();
+		System.out.println("rows-count: " + rows_count);
+		for (int row=0; row<rows_count; row++){
+			OrderResponse or = new OrderResponse();
+			List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
+			//To calculate no of columns(cells) In that specific row.
+			int columns_count = Columns_row.size();
+			//System.out.println("Number of cells In Row "+row+" are "+columns_count);
+			if(columns_count == 0 || Columns_row.get(0).getText().isEmpty()){
 				continue;
 			}
 
-			for (int j = 0; j < dimensiuneColoana; j++) {
-				String celltext = coloana.get(j).getText();
-				wfc.add(i, j, celltext);
-				System.out.println("Cell Value Of row number " + i + " and column number " + j + " Is " + celltext);
+			//Loop will execute till the last cell of that specific row.
+			for (int column=0; column<columns_count; column++){
+				//To retrieve text from that specific cell.
+				String celtext = Columns_row.get(column).getText();
+				or.add(column, celtext);
+				System.out.println(or.toString());
+				//System.out.println("Cell Value Of row number "+row+" and column number "+column+" Is "+celtext);
 			}
-			workflow.add(wfc);
+			if(columns_count != 0){
+				raspuns.add(or);
+			}
 		}
 	}
 
@@ -284,7 +286,7 @@ public abstract class Actions {
 			takeListFromOrderIL(table1IlXpath);
 			for (OrderResponse rsp : raspuns) {
 				try {
-					if (rsp.getStatus().endsWith(status)) {
+					if (rsp.getName().endsWith(status)) {
 						return;
 					}
 				} catch (Exception e) {
